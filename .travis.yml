@@ -12,7 +12,7 @@ install:
 
 # Run unit tests with coverage.
 script:
-  - coverage run --source polymicro -m unittest discover
+  - coverage run --source simple_dispatch -m unittest discover
 
 # Upload to PyPi only on a tag push.
 deploy:
