@@ -1,28 +1,19 @@
 dist: xenial
 language: python
-
 python:
 - '3.7'
-
-# Install pipenv dependencies and codecov for CI.
 install:
 - pip install pipenv
 - pip install codecov
 - pipenv install --dev
-
-# Run unit tests with coverage.
 script:
-  - coverage run --source simple_dispatch -m unittest discover
-
-# Upload to PyPi only on a tag push.
+- coverage run --source simple_dispatch -m unittest discover
 deploy:
   provider: pypi
   user: zprobst
   on:
     tags: true
   password:
-    secure: lS00dA0NWin0qyVEsnfmpfIw5nLTLWyODGZnpaIisbzorr3wC0wDmcZOgWjJVf0oPPLc1fqWWvk/hL2p88CYm5nZYVF5zaQqrAekSQ1eZ+C7I4qIluk/7nXi3fqmNTKPlSddRTKxM6UyQ4x2YM+ZST5cc+WIE558rAehmShSUa0ZN+8WCCtyiGfJ+7dyJYba9uetAUQU0MEOgHamBi24JRiR+htBiLXrz+/rR5fPXqTsoCPt3NBdTRKmuNn/Ib8Kz9lrmyJKv6TZhLSMuQVih6S1zhmd/P1McRfvwZM6WKhoosCG1uUmgTJ2PECS/0M7NwnROlKJYfWRDZaMqkgYvsWTC5xxo4nN5f/x4A90ymylJnsDO2t/dSbaW+vzfcaajZOBXc0uoTYkCPRpHGOXbhqZaVIASbSfliU+rdAKJddZpSmbQfTGWRzgiM43gZaNBSJOHBz98qPPAzqCdrpJmMNfNKaSfMiO8hozZCjDs/EPBduuGhgPZ1vPcuqiygdWokZd7/Fc/NhXL0e3cXee0w9A/6Sbs51SKnBMOj4aeT4xOxmPDhnmSS23o7Y4ao5JvopKIXGYKXS0cyhf7IR3Hn36e7C6A4Kn9kIaBNt1zqH4RjwDHCbsCpKccPr/CClnJAsbFVV9Gz2xfwg44vOhxpj8xyDfCUxsRh+AhmQtA1M=
-
-# Upload code coverage report to codecov after CI successfully completes.
+    secure: Vf43srGTD0dWtfgCoGnI8hdNt3+arUCkXrYOfkkjU1zghsopS/mvsejdXyHwQ78FetwR6XX8HkPjCcOjRr3qX0ZSFNv8+C28AtcrDvNansc9+Lxo1cGuwoKKt9wN4MjvwzPs4ABICU+gOCvO0Nkm0yVRCUCXSmyFvmv/mlaWIvzeD5Sic1gAPzLccXudyyB4GL28OZCTFRYGhIeNpU3ISWz3B1znk2mHfHIpZvqs1hqlDQB+BjlsFH4aE13aJ1TOxJrtw6omnHmdbDm9j4R8EHH8stL6sBdjUTl0YM8/FHmTJQZ9kwGWAe5dtE7mSJ0+2gyMlp4hxpKAMYMKL3LXbTmK2n4vUYS6bDy9enfMNbpZEn9RsFe7DZaLFEVZa3t0WYMCeXvw1eX2c7Dl5nxJTvbB9wEnh1lfdPOQN3UFs73ZqnUrDijJ3dWTTSD6oAcfjySKan1jvu7l7fCpovx1FpciWTVBHneD3yxRNYqRs+LjFM/y5D+QYWP6fUyxjjFIUG0kndpJ+VDewaG8bVS9QZVFBz0V+Gm0cxXK5125NPMO0SDnrYNiYtUB5L9F8Ksr/ZHFxKqPMAkv0eUFzV/qcCbl5kVMZPXCKeAKlQQz31V6LMcvRUbhx/EllM02zggoGpe8b9/T6wl6Db6axlebhQY+I/BT3VhpkP6yZdU99kQ=
 after_success:
-  - codecov
+- codecov
