@@ -55,3 +55,48 @@ def subscriber(*args):
         return func
 
     return decorator
+
+
+def dispatch_before(event_name):
+    """
+    Dispatches the defined event before the function is executed. args and kwargs are passed to the handler.
+
+    @subscriber('BEFORE_SOME_EVENT')
+    def my_handler(**kwargs):
+        caller_args = kwargs['func_args']
+        caller_kwargs = kwargs['func_kwargs']
+
+    :param event_name: The name of the event to dispatch.
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            dispatch(event_name, func_args=args, func_kwargs=kwargs)
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def dispatch_after(event_name):
+    """
+    Dispatches the defined event after the function is executed and before the result is returned to the caller of the
+    annotated function. Additionally, the result or return of the function call is passed in the result kwarg.
+
+     @subscriber('AFTER_SOME_EVENT')
+     def my_handler(**kwargs):
+        caller_args = kwargs['func_args']
+        caller_kwargs = kwargs['func_kwargs']
+        caller_result = kwargs['result']
+
+    :param event_name: The name of the event to dispatch.
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            dispatch(event_name, func_args=args, func_kwargs=kwargs, result=result)
+            return result
+
+        return wrapper
+
+    return decorator

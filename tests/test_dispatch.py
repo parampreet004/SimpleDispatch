@@ -1,4 +1,4 @@
-from simple_dispatch import connect, subscriber, dispatch
+from simple_dispatch import subscriber, dispatch, dispatch_after, dispatch_before
 
 from unittest import TestCase
 
@@ -31,3 +31,34 @@ class TestCases(TestCase):
 
         dispatch(EVENT_A, a=True, b=False)
         dispatch(EVENT_B, a=False, b=True)
+
+    def test_before_after(self):
+        EVENT_BEFORE = 'BEFORE_A'
+        EVENT_AFTER = 'BEFORE_B'
+
+        @subscriber(EVENT_BEFORE)
+        def before_some_event(**kwargs):
+            caller_args = kwargs['func_args']
+            caller_kwargs = kwargs['func_kwargs']
+
+            self.assertEqual(caller_args, (1, 2))
+            self.assertEqual(caller_kwargs, {'something_else': True})
+
+        @subscriber(EVENT_AFTER)
+        def after_some_event(**kwargs):
+            caller_args = kwargs['func_args']
+            caller_kwargs = kwargs['func_kwargs']
+            caller_result = kwargs['result']
+
+            self.assertEqual(caller_args, (1, 2))
+            self.assertEqual(caller_kwargs, {'something_else': True})
+            self.assertFalse(caller_result)
+
+        @dispatch_before(EVENT_BEFORE)
+        @dispatch_after(EVENT_AFTER)
+        def some_event(a, b, something_else=False):
+            self.assertEqual([a, b], [1, 2])
+            self.assertTrue(something_else)
+            return False
+
+        some_event(1, 2, something_else=True)
