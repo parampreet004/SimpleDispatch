@@ -1,0 +1,28 @@
+dist: xenial
+language: python
+
+python:
+- '3.7'
+
+# Install pipenv dependencies and codecov for CI.
+install:
+- pip install pipenv
+- pip install codecov
+- pipenv install --dev
+
+# Run unit tests with coverage.
+script:
+  - coverage run --source polymicro -m unittest discover
+
+# Upload to PyPi only on a tag push.
+deploy:
+  provider: pypi
+  user: zprobst
+  on:
+    tags: true
+  password:
+    secure: lS00dA0NWin0qyVEsnfmpfIw5nLTLWyODGZnpaIisbzorr3wC0wDmcZOgWjJVf0oPPLc1fqWWvk/hL2p88CYm5nZYVF5zaQqrAekSQ1eZ+C7I4qIluk/7nXi3fqmNTKPlSddRTKxM6UyQ4x2YM+ZST5cc+WIE558rAehmShSUa0ZN+8WCCtyiGfJ+7dyJYba9uetAUQU0MEOgHamBi24JRiR+htBiLXrz+/rR5fPXqTsoCPt3NBdTRKmuNn/Ib8Kz9lrmyJKv6TZhLSMuQVih6S1zhmd/P1McRfvwZM6WKhoosCG1uUmgTJ2PECS/0M7NwnROlKJYfWRDZaMqkgYvsWTC5xxo4nN5f/x4A90ymylJnsDO2t/dSbaW+vzfcaajZOBXc0uoTYkCPRpHGOXbhqZaVIASbSfliU+rdAKJddZpSmbQfTGWRzgiM43gZaNBSJOHBz98qPPAzqCdrpJmMNfNKaSfMiO8hozZCjDs/EPBduuGhgPZ1vPcuqiygdWokZd7/Fc/NhXL0e3cXee0w9A/6Sbs51SKnBMOj4aeT4xOxmPDhnmSS23o7Y4ao5JvopKIXGYKXS0cyhf7IR3Hn36e7C6A4Kn9kIaBNt1zqH4RjwDHCbsCpKccPr/CClnJAsbFVV9Gz2xfwg44vOhxpj8xyDfCUxsRh+AhmQtA1M=
+
+# Upload code coverage report to codecov after CI successfully completes.
+after_success:
+  - codecov
