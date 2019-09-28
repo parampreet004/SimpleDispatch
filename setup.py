@@ -5,7 +5,7 @@ with open('README.md', 'r') as file:
 
 setuptools.setup(
     name='simple_dispatch',
-    version='1.0.0',
+    version='1.1.0',
     author='Resilient Vitality',
     author_email='zprobst@resilientvitality.com',
     description='A library inspired by the Django Dispatch System for simple pub-sub interactions.',
