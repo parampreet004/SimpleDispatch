@@ -1,5 +1,8 @@
 dist: xenial
 language: python
+arch: 
+- 'arm64'
+- 'amd64'
 python:
 - '3.7'
 install:
